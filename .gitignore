@@ -9,6 +9,9 @@ dist/
 .env.local
 .env.*.local
 
+# Claude
+CLAUDE.md
+
 # IDE/Editor
 .idea/
 .vscode/
