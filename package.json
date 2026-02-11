@@ -1,7 +1,7 @@
 {
   "name": "@playcamp/node-sdk-example-server",
   "version": "1.0.0",
-  "description": "PlayCamp SDK 사용 예제 서버",
+  "description": "PlayCamp Node SDK Example Server",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",

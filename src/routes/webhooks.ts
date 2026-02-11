@@ -285,7 +285,7 @@ function getSampleDataForEventType(eventType: string): Record<string, unknown> {
         reward: [
           {
             itemId: 'test-item-001',
-            itemName: { ko: '테스트 아이템', en: 'Test Item' },
+            itemName: { ko: 'Test Item', en: 'Test Item' },
             itemQuantity: 1,
           },
         ],
