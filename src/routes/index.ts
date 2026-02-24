@@ -5,6 +5,7 @@ import couponsRouter from './coupons.js';
 import sponsorsRouter from './sponsors.js';
 import paymentsRouter from './payments.js';
 import webhooksRouter, { createWebhookReceiverRouter } from './webhooks.js';
+import webviewRouter from './webview.js';
 
 const apiRouter = Router();
 
@@ -15,5 +16,6 @@ apiRouter.use('/coupons', couponsRouter);
 apiRouter.use('/sponsors', sponsorsRouter);
 apiRouter.use('/payments', paymentsRouter);
 apiRouter.use('/webhooks', webhooksRouter);
+apiRouter.use('/webview', webviewRouter);
 
 export { apiRouter, createWebhookReceiverRouter };

@@ -10,8 +10,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "@playcamp/node-sdk": "^0.0.3"
+    "@playcamp/node-sdk": "file:../playcamp-node-sdk",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",

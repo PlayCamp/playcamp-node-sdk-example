@@ -18,7 +18,7 @@ router.get('/:userId', async (req: Request, res: Response) => {
 // POST /api/sponsors - Create sponsor
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { userId, creatorKey, campaignId } = req.body;
+    const { userId, creatorKey, campaignId, callbackId } = req.body;
     if (!userId || !creatorKey) {
       return res.status(400).json({
         success: false,
@@ -30,6 +30,7 @@ router.post('/', async (req: Request, res: Response) => {
       userId,
       creatorKey,
       campaignId,
+      callbackId,
     });
 
     res.status(201).json({ success: true, data: sponsor });
@@ -41,7 +42,7 @@ router.post('/', async (req: Request, res: Response) => {
 // PUT /api/sponsors/:userId - Update sponsor
 router.put('/:userId', async (req: Request, res: Response) => {
   try {
-    const { campaignId, newCreatorKey } = req.body;
+    const { campaignId, newCreatorKey, callbackId } = req.body;
     if (!newCreatorKey) {
       return res.status(400).json({
         success: false,
@@ -52,6 +53,7 @@ router.put('/:userId', async (req: Request, res: Response) => {
     const sponsor = await getSdk(req).sponsors.update(req.params.userId, {
       campaignId: campaignId || undefined,
       newCreatorKey,
+      callbackId,
     });
 
     res.json({ success: true, data: sponsor });
@@ -64,7 +66,11 @@ router.put('/:userId', async (req: Request, res: Response) => {
 router.delete('/:userId', async (req: Request, res: Response) => {
   try {
     const campaignId = req.query.campaignId as string;
-    await getSdk(req).sponsors.remove(req.params.userId, campaignId ? { campaignId } : undefined);
+    const callbackId = req.query.callbackId as string;
+    await getSdk(req).sponsors.remove(req.params.userId, {
+      ...(campaignId ? { campaignId } : {}),
+      ...(callbackId ? { callbackId } : {}),
+    });
     res.status(204).send();
   } catch (error) {
     handleError(res, error);

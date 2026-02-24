@@ -262,6 +262,9 @@ export function createWebhookReceiverRouter(): Router {
         case 'sponsor.changed':
           debugLog(`   [sponsor] Changed: ${String(data.oldCreatorKey)} -> ${String(data.newCreatorKey)}`);
           break;
+        case 'sponsor.ended':
+          debugLog(`   [sponsor] Ended: ${String(data.userId)} / ${String(data.creatorKey)}`);
+          break;
       }
     }
 
@@ -316,6 +319,12 @@ function getSampleDataForEventType(eventType: string): Record<string, unknown> {
         campaignId: 'test-campaign-id',
         oldCreatorKey: 'old-creator-key',
         newCreatorKey: 'new-creator-key',
+      };
+    case 'sponsor.ended':
+      return {
+        userId: 'test-user-123',
+        campaignId: 'test-campaign-id',
+        creatorKey: 'test-creator-key',
       };
     default:
       return { message: 'This is a test webhook' };

@@ -29,7 +29,7 @@ router.post('/validate', async (req: Request, res: Response) => {
 // POST /api/coupons/redeem - Redeem coupon
 router.post('/redeem', async (req: Request, res: Response) => {
   try {
-    const { couponCode, userId } = req.body;
+    const { couponCode, userId, callbackId } = req.body;
     if (!couponCode || !userId) {
       return res.status(400).json({
         success: false,
@@ -37,7 +37,7 @@ router.post('/redeem', async (req: Request, res: Response) => {
       });
     }
 
-    const result = await getSdk(req).coupons.redeem({ couponCode, userId });
+    const result = await getSdk(req).coupons.redeem({ couponCode, userId, callbackId });
     res.json({ success: true, data: result });
   } catch (error) {
     handleError(res, error);

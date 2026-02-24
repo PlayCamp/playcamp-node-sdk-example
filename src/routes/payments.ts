@@ -18,6 +18,7 @@ router.post('/', async (req: Request, res: Response) => {
       platform,
       distributionType,
       purchasedAt,
+      callbackId,
     } = req.body;
 
     if (!userId || !transactionId || !productId || !amount || !currency || !platform) {
@@ -37,6 +38,7 @@ router.post('/', async (req: Request, res: Response) => {
       platform,
       distributionType,
       purchasedAt: purchasedAt || new Date().toISOString(),
+      callbackId,
     });
 
     res.status(201).json({ success: true, data: payment });
@@ -75,7 +77,8 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
 // POST /api/payments/:transactionId/refund - Refund payment
 router.post('/:transactionId/refund', async (req: Request, res: Response) => {
   try {
-    const payment = await getSdk(req).payments.refund(req.params.transactionId);
+    const { callbackId } = req.body;
+    const payment = await getSdk(req).payments.refund(req.params.transactionId, { callbackId });
     res.json({ success: true, data: payment });
   } catch (error) {
     handleError(res, error);
