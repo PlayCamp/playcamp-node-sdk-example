@@ -74,6 +74,30 @@ router.get('/user/:userId', async (req: Request, res: Response) => {
   }
 });
 
+// POST /api/payments/bulk - Create bulk payments
+router.post('/bulk', async (req: Request, res: Response) => {
+  try {
+    const { payments, callbackId, isTest } = req.body;
+
+    if (!Array.isArray(payments) || payments.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'payments array is required and must not be empty.',
+      });
+    }
+
+    const result = await getSdk(req).payments.createBulk({
+      payments,
+      callbackId,
+      isTest,
+    });
+
+    res.status(201).json({ success: true, data: result });
+  } catch (error) {
+    handleError(res, error);
+  }
+});
+
 // POST /api/payments/:transactionId/refund - Refund payment
 router.post('/:transactionId/refund', async (req: Request, res: Response) => {
   try {
