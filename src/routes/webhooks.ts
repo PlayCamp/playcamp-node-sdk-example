@@ -256,11 +256,17 @@ export function createWebhookReceiverRouter(): Router {
         case 'payment.refunded':
           debugLog(`   [payment] Refund: ${String(data.transactionId)}`);
           break;
+        case 'payment.bulk_created':
+          debugLog(`   [payment] Bulk: ${String(data.successful)}/${String(data.totalRequested)} succeeded`);
+          break;
         case 'sponsor.created':
           debugLog(`   [sponsor] Sponsor: ${String(data.userId)} -> ${String(data.creatorKey)}`);
           break;
         case 'sponsor.changed':
           debugLog(`   [sponsor] Changed: ${String(data.oldCreatorKey)} -> ${String(data.newCreatorKey)}`);
+          break;
+        case 'sponsor.ended':
+          debugLog(`   [sponsor] Ended: ${String(data.userId)} / ${String(data.creatorKey)}`);
           break;
       }
     }
@@ -304,6 +310,14 @@ function getSampleDataForEventType(eventType: string): Record<string, unknown> {
         transactionId: 'test-txn-123456',
         userId: 'test-user-123',
       };
+    case 'payment.bulk_created':
+      return {
+        totalRequested: 10,
+        successful: 8,
+        failed: 1,
+        skipped: 1,
+        transactionIds: ['test-txn-001', 'test-txn-002', 'test-txn-003'],
+      };
     case 'sponsor.created':
       return {
         userId: 'test-user-123',
@@ -316,6 +330,12 @@ function getSampleDataForEventType(eventType: string): Record<string, unknown> {
         campaignId: 'test-campaign-id',
         oldCreatorKey: 'old-creator-key',
         newCreatorKey: 'new-creator-key',
+      };
+    case 'sponsor.ended':
+      return {
+        userId: 'test-user-123',
+        campaignId: 'test-campaign-id',
+        creatorKey: 'test-creator-key',
       };
     default:
       return { message: 'This is a test webhook' };

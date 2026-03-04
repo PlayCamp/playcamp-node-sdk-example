@@ -52,6 +52,7 @@ app.listen(port, () => {
 
 [Payments]
    POST /api/payments                    - Create payment
+   POST /api/payments/bulk               - Create bulk payments
    GET  /api/payments/:txnId             - Get payment
    GET  /api/payments/user/:userId       - Get user payments
    POST /api/payments/:txnId/refund      - Refund payment
