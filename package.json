@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@playcamp/node-sdk": "file:../playcamp-node-sdk",
+    "@playcamp/node-sdk": "0.0.4",
     "express": "^4.18.2"
   },
   "devDependencies": {
