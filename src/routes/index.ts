@@ -4,6 +4,7 @@ import creatorsRouter from './creators.js';
 import couponsRouter from './coupons.js';
 import sponsorsRouter from './sponsors.js';
 import paymentsRouter from './payments.js';
+import playtimeRouter from './playtime.js';
 import webhooksRouter, { createWebhookReceiverRouter } from './webhooks.js';
 import webviewRouter from './webview.js';
 
@@ -15,6 +16,7 @@ apiRouter.use('/creators', creatorsRouter);
 apiRouter.use('/coupons', couponsRouter);
 apiRouter.use('/sponsors', sponsorsRouter);
 apiRouter.use('/payments', paymentsRouter);
+apiRouter.use('/playtime-sessions', playtimeRouter);
 apiRouter.use('/webhooks', webhooksRouter);
 apiRouter.use('/webview', webviewRouter);
 
