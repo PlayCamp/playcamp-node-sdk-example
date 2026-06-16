@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { getSdk } from '../sdk.js';
+import { getEffectiveApiUrl } from '../config.js';
 import { handleError } from '../error-handler.js';
 
 const router = Router();
@@ -21,7 +22,13 @@ router.post('/token', async (req: Request, res: Response) => {
       callbackId,
     });
 
-    res.status(201).json({ success: true, data: result });
+    // Build the full webview URL from the configured SDK API host so it works
+    // regardless of SDK_API_URL (local, sandbox, live, custom).
+    const base = getEffectiveApiUrl().replace(/\/$/, '');
+    let webviewUrl = `${base}/webview/?ott=${encodeURIComponent(result.ott)}`;
+    if (campaignId) webviewUrl += '&tabs=sponsor,coupon';
+
+    res.status(201).json({ success: true, data: result, webviewUrl });
   } catch (error) {
     handleError(res, error);
   }
