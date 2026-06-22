@@ -7,8 +7,19 @@ const router = Router();
 // POST /api/playtime-sessions - Report a single playtime session
 router.post('/', async (req: Request, res: Response) => {
   try {
-    const { sessionId, userId, durationSeconds, startedAt, endedAt, metadata, callbackId, isTest } =
-      req.body;
+    const {
+      sessionId,
+      userId,
+      durationSeconds,
+      startedAt,
+      endedAt,
+      campaignId,
+      creatorKey,
+      platform,
+      metadata,
+      callbackId,
+      isTest,
+    } = req.body;
 
     if (!sessionId || !userId || !durationSeconds || !startedAt || !endedAt) {
       return res.status(400).json({
@@ -23,6 +34,11 @@ router.post('/', async (req: Request, res: Response) => {
       durationSeconds,
       startedAt,
       endedAt,
+      // Optional attribution overrides (added in SDK 0.0.8). When omitted the
+      // server matches the sponsorship and defaults platform to 'Other'.
+      campaignId,
+      creatorKey,
+      platform,
       metadata,
       callbackId,
       isTest,
